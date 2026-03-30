@@ -1,8 +1,8 @@
 def average_ratios(numbers):
-    total = 0
-    for i in range(len(numbers)):
-        # BUG: Crashes on zero
-        total += 100 / numbers[i] 
-    return total / len(numbers)
+    nums = [n for n in numbers if n != 0]
+    if not nums:
+        raise ValueError("no non-zero numbers")
+    total = sum(100 / n for n in nums)
+    return total / len(nums)
 
 print(average_ratios([10, 5, 0]))
