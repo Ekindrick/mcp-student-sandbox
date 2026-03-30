@@ -1,3 +1,12 @@
-AWS_SECRET_KEY = "AKIA_FAKE_KEY_123456789_STUDENT_TEST"
+import os
+
+def _get_aws_secret():
+    try:
+        return os.environ["AWS_SECRET_KEY"]
+    except KeyError:
+        raise EnvironmentError("AWS_SECRET_KEY not set")
+
 def connect():
-    print(f"Connecting with: {AWS_SECRET_KEY}")
+    s = _get_aws_secret()
+    masked = s[:4] + "*" * max(0, len(s) - 8) + s[-4:] if len(s) > 8 else "*" * len(s)
+    print(f"Connecting with: {masked}")
